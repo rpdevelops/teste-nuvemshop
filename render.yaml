@@ -2,6 +2,7 @@ services:
   - type: web
     name: nuvemshop-app
     env: nix
+    plan: free
     buildCommand: ""
     startCommand: "php -S 0.0.0.0:10000"
     envVars:
