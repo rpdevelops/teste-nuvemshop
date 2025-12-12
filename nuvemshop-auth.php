@@ -8,7 +8,7 @@
 
 $client_id = "24014";
 $client_secret = "a8ab5b50e1f6443653c39eab1bcb35fa42937e2d2bd1a865";
-$redirect_uri = "https://converta.app/webhooks/nuvemshop-auth.php"; // EXATAMENTE igual ao configurado no painel
+$redirect_uri = "https://teste-nuvemshop.onrender.com/nuvemshop-auth.php"; // EXATAMENTE igual ao configurado no painel
 
 if (!isset($_GET['code'])) {
     die("Erro: código de autorização não encontrado.");
@@ -48,7 +48,7 @@ file_put_contents("tokens.txt", "Loja: $store_id | Token: $access_token\n", FILE
 
 function criarWebhook($store_id, $access_token, $evento) {
     $payload = [
-        "url" => "https://converta.app/webhooks/nuvemshop.php",
+        "url" => "https://teste-nuvemshop.onrender.com/nuvemshop.php",
         "event" => $evento
     ];
 
