@@ -55,7 +55,7 @@ function criarWebhook($store_id, $access_token, $evento) {
     $ch = curl_init("https://api.nuvemshop.com.br/v1/$store_id/webhooks");
     curl_setopt_array($ch, [
         CURLOPT_HTTPHEADER => [
-            "Authentication: Bearer $access_token",
+            "Authorization: Bearer $access_token",
             "User-Agent: ConvertaApp (converta.app)",
             "Content-Type: application/json"
         ],
