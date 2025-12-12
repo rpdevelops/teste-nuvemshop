@@ -58,8 +58,7 @@ function criarWebhook($store_id, $access_token, $evento) {
             "Authentication: Bearer $access_token",
             "User-Agent: ConvertaApp (converta.app)",
             "Content-Type: application/json"
-        ]
-
+        ],
         CURLOPT_POST => true,
         CURLOPT_POSTFIELDS => json_encode($payload),
         CURLOPT_RETURNTRANSFER => true
