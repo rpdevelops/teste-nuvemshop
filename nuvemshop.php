@@ -1,30 +1,30 @@
 <?php
 /**
  * nuvemshop-webhook.php
- * Recebe eventos da Nuvemshop
+ * Loga eventos da Nuvemshop no STDOUT (Render)
  */
 
+// Sempre responder rápido
+http_response_code(200);
+
 // Captura headers
-$headers = getallheaders();
+$headers = function_exists('getallheaders')
+    ? getallheaders()
+    : [];
 
 // Captura body
 $rawBody = file_get_contents("php://input");
 
+// Monta log estruturado
 $log = [
     "date" => date("c"),
     "method" => $_SERVER["REQUEST_METHOD"] ?? null,
     "headers" => $headers,
-    "body_raw" => $rawBody,
-    "body_json" => json_decode($rawBody, true),
+    "body" => json_decode($rawBody, true),
 ];
 
-// Salva log estruturado
-file_put_contents(
-    __DIR__ . "/logs-webhook.jsonl",
-    json_encode($log, JSON_UNESCAPED_UNICODE) . PHP_EOL,
-    FILE_APPEND
-);
+// 🔥 LOGA NO STDOUT (Render mostra!)
+error_log("NUVEMSHOP_WEBHOOK " . json_encode($log, JSON_UNESCAPED_UNICODE));
 
-// Sempre responder rápido
-http_response_code(200);
+// Resposta
 echo "OK";
