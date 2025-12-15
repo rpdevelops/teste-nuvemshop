@@ -1,20 +1,30 @@
 <?php
 /**
  * nuvemshop-webhook.php
- * 
- * Recebe eventos enviados pela Nuvemshop.
+ * Recebe eventos da Nuvemshop
  */
 
-$input = file_get_contents("php://input");
+// Captura headers
+$headers = getallheaders();
 
-if (!$input) {
-    http_response_code(400);
-    die("Nenhum dado recebido");
-}
+// Captura body
+$rawBody = file_get_contents("php://input");
 
-// Salva log (para debugar)
-file_put_contents("logs-webhook.txt", date("c") . " - " . $input . "\n", FILE_APPEND);
+$log = [
+    "date" => date("c"),
+    "method" => $_SERVER["REQUEST_METHOD"] ?? null,
+    "headers" => $headers,
+    "body_raw" => $rawBody,
+    "body_json" => json_decode($rawBody, true),
+];
 
-// Sempre responda 200
+// Salva log estruturado
+file_put_contents(
+    __DIR__ . "/logs-webhook.jsonl",
+    json_encode($log, JSON_UNESCAPED_UNICODE) . PHP_EOL,
+    FILE_APPEND
+);
+
+// Sempre responder rápido
 http_response_code(200);
 echo "OK";
